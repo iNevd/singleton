@@ -14,5 +14,16 @@ public:
 	}
 }
 
-auto& test = Singleton<Test>::getInstance();
+Test* test = Test::getInstance();
+```
+
+```c++
+class Test2 : public Singleton<Test2, int> {
+public:
+	Test(int) {
+		std::cout << "constructor with args" << std::endl;
+	}
+}
+
+Test2* test2 = Test2::getInstance(100);
 ```

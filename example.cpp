@@ -1,33 +1,28 @@
 #include <iostream>
 #include "singleton.h"
 
+// constructor without args
 class Test : public Singleton<Test> {
+	friend SingletonDerived;
 public:
 	Test() {
-		std::cout << "default constructor" << std::endl;
+		std::cout << "constructor without args" << std::endl;
 	}
-	Test(int i) {
-		std::cout << "constructor with int: " << i << std::endl;
-	}
-public:
-	static const Test& getInstance() {
-		return Singleton<Test>::getInstance();
-	}
+};
 
-	static const Test& getInstance(int i) {
-		return Singleton<Test, int>::getInstance(i);
+// constructor with args
+class Test2 : public Singleton<Test2, int> {
+	friend SingletonDerived;
+public:
+	Test2(const int i){
+		std::cout << "constructor with int: " << i << std::endl;
 	}
 };
 
 int main()
 {
-	auto& a1 = Test::getInstance();
-	auto& b1 = Test::getInstance(0);
-	auto& a2 = Test::getInstance();
-	auto& b2 = Test::getInstance(1);
-	std::cout << "a: " << &a1 << std::endl;
-	std::cout << "b: " << &b1 << std::endl;
-	std::cout << "a2: " << &a2 << std::endl;
-	std::cout << "b2: " << &b2 << std::endl;
-    return 0;
+	auto pt10 = Test::getInstance();
+	auto pt11 = Test::getInstance();
+	auto pt20 = Test2::getInstance(100);
+	auto pt21 = Test2::getInstance(200);
 }
